@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Profile Lập Trình Viên</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  href="https://dangkywebvoibocongthuong.com/wp-content/uploads/2021/11/logo-da-dang-ky-bo-cong-thuong.png"
+  sizes="32x32"
+/>
+<style>
+  /* === Navbar === */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+    transition: background 0.5s, color 0.5s, filter 0.3s;
+  }
+
+  .navbar {
+    width: 100%;
+    background-color: #4a4a4a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 14px 20px;
+    color: white;
+  }
+
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu li {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .nav-menu li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .nav-menu li a:hover {
+    color: #ffcc00;
+  }
+
+  /* Nút chuyển đổi màu */
+  #toggleMode {
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.5s ease;
+  }
+
+  /* === Container === */
+  .container {
+    max-width: 900px;
+    margin: 140px auto 20px; /* margin top đủ để không bị che navbar */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  /* === Logo tròn lớn giữa trên chữ typing === */
+  .main-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 25px;
+    display: block;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    border: 5px solid #4a90e2;
+    background: white;
+  }
+
+  /* Tiêu đề + badge */
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .typing-container {
+    white-space: nowrap;
+  }
+
+  .typing {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #666;
+    animation: blink 0.7s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% {
+      border-color: transparent;
+    }
+    100% {
+      border-color: #666;
+    }
+  }
+
+  .highlight {
+    color: #006400;
+  }
+
+  .title img {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+  }
+
+  /* Socials */
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .social-btn {
+    width: 50px;
+    height: 50px;
+    background: #000;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  .social-btn:hover {
+    transform: translateY(-5px);
+  }
+  .facebook:hover,
+  .messenger:hover,
+  .telegram:hover,
+  .youtube:hover,
+  .whatsapp:hover {
+    background: #000;
+  }
+  .zalo:hover {
+    background: #0068ff;
+  }
+  .social-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  /* Skills */
+  .skills {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+  }
+  .skills h2 {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+  .skill {
+    margin: 20px 0;
+    text-align: left;
+    position: relative;
+  }
+  .skill-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .skill-bar {
+    width: 100%;
+    height: 16px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 2s ease-in-out;
+  }
+  .html {
+    background: #e44d26;
+  }
+  .lua {
+    background: #006400;
+  }
+  .php {
+    background: #8892bf;
+  }
+  .mysql {
+    background: #f29111;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 14px;
+    color: #555;
+    position: relative;
+  }
+  .contact-box {
+    background: white;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #222;
+  }
+
+  /* Logo Bộ Công Thương cố định góc phải, hiển thị đầy đủ */
+  .bocongthuong {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+    height: 80px;
+    max-width: 150px;
+    object-fit: contain;
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .bocongthuong:hover {
+    transform: scale(1.1);
+  }
+
+  /* Responsive cho màn hình nhỏ */
+  @media only screen and (max-width: 480px) {
+    .title {
+      font-size: 24px;
+      gap: 10px;
+    }
+    .title img {
+      width: 30px;
+      height: 30px;
+    }
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+    .social-btn img {
+      width: 20px;
+      height: 20px;
+    }
+    .skills {
+      max-width: 90%;
+      margin: 30px auto;
+    }
+    .skill-bar {
+      height: 12px;
+    }
+  }
+
+  /* Dark mode */
+  body.dark {
+    background: #1e1e1e;
+    color: #eee;
+  }
+  body.dark footer {
+    color: #ccc;
+  }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <ul class="nav-menu">
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#stuffs">My Stuffs</a></li>
+      <li><a href="#signed">Signed App</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li style="display: flex; align-items: center;">
+        <a href="#contact">Contact</a>
+        <!-- Nút chuyển chế độ sáng/tối -->
+        <svg
+          class="color-mode"
+          id="toggleMode"
+          height="30"
+          viewBox="0 0 400 400"
+          width="30"
+          style="margin-left: 8px; cursor: pointer; transition: transform 0.5s ease;"
+          title="Chuyển chế độ sáng/tối"
+        >
+          <circle cx="200" cy="200" fill="white" r="195" stroke="#000" stroke-width="10"></circle>
+          <path d="M 200 375 A 175 175 0 0 1 200 25"></path>
+          <path d="M 200 300 A 100 100 0 0 1 200 100" fill="#FFF"></path>
+          <path d="M 200 100 A 100 100 180 0 1 200 300"></path>
+        </svg>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <!-- Logo tròn lớn -->
+  <img
+    src="https://khoindvn.io.vn/img/icons/badge.png"
+    alt="Logo lớn"
+    class="main-logo"
+  />
+
+  <h1 class="title" id="about">
+    <span class="typing-container">
+      <span class="typing" id="typing"></span>
+    </span>
+    <img
+      src="https://khoindvn.io.vn/img/icons/badge.png"
+      alt="badge"
+      style="width: 40px; height: 40px; border-radius: 50%;"
+    />
+  </h1>
+
+  <div class="socials">
+  <a href="https://www.facebook.com/laptrinhvienPHAMVANHOApriority/?locale=vi_VN" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/380700650_10162533193146729_2379134611963304810_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGPjSQu3f1u38m-yKVBlo1XtjWzO19RVKS2NbM7X1FUpDJzWCTckONGsCoUHw8cfiNrI0KjRtmKuy3TrnpnR8gd&_nc_ohc=MC4ZmRs-cAcQ7kNvwE9ylPC&_nc_oc=Adk-w-7cDXxig_jPICuW2zud6zdwtXzwBICWzvS1ySE0ZdN25_GQAzXDoHHbhagwdHI&_nc_zt=23&_nc_ht=scontent.fhan2-4.fna&_nc_gid=XJK4t3-rIMiEAv9cOlPmLw&oh=00_AfVT9UITcE4QkHBywL53sbx9cjSBgUYm-eUmvQ3m4Cl7-g&oe=68B33A3E" alt="Facebook" />
+  </a>
+  <a href="https://m.me/laptrinhvienPHAMVANHOApriority
+" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/481110451_1048405227313977_5297689486950086789_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGE1bIlBqp3PSDV3t4q5yZODOT1MMcJnvsM5PUwxwme-7bjA53afjiVhEoGXtVLV5UMMVNmGaMiStFaGpA94vFf&_nc_ohc=PUferDsPzGMQ7kNvwE3aHL9&_nc_oc=AdlII0duv87VRaSqSFnr-hDhD70GbaMhOm8jreDbJqs8vhOKFl9Kn5Rx2paJKj507PA&_nc_zt=23&_nc_ht=scontent.fhan2-4.fna&_nc_gid=vXdaRZQh7cZLMZ8Gki634g&oh=00_AfVTNLl0w_Ucyl_QHK_irkke_0kPAxF3Qqvm0a15dIqprA&oe=68B34725" alt="Messenger" />
+  </a>
+  <a href="https://t.me/+0869719516" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.icons8.com/color/48/telegram-app.png" alt="Telegram" />
+  </a>
+  <a href="https://zalo.me/0869719516
+" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.icons8.com/color/48/zalo.png" alt="Zalo" />
+  </a>
+  <a href="https://www.youtube.com/@PHAMVANHOAAPI2002" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.icons8.com/color/48/youtube-play.png" alt="YouTube" />
+  </a>
+  <a href="https://wa.me/0869719516" class="social-btn" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.icons8.com/color/48/whatsapp.png" alt="WhatsApp" />
+  </a>
+</div>
+
+
+  <div class="skills" id="skills">
+    <h2>Programming Language Skills</h2>
+    <div class="skill">
+      <div class="skill-name">HTML/CSS <span>100%</span></div>
+      <div class="skill-bar"><div class="skill-fill html"></div></div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Lua <span>100%</span></div>
+      <div class="skill-bar"><div class="skill-fill lua"></div></div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">PHP <span>100%</span></div>
+      <div class="skill-bar"><div class="skill-fill php"></div></div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">MySQL <span>100%</span></div>
+      <div class="skill-bar"><div class="skill-fill mysql"></div></div>
+    </div>
+  </div>
+
+  <footer id="contact">
+    <div class="contact-box">
+      Email: phamvanhoaapi2002@gmail.com <br />
+      SĐT: 0869 719 516
+    </div>
+  </footer>
+</div>
+
+<!-- Logo Bộ Công Thương -->
+<a href="https://bocongthuong.gov.vn/" target="_blank" rel="noopener noreferrer">
+  <img src="https://hoc11.vn/images/logoSaleNoti.png" alt="Đã đăng ký BCT" class="bocongthuong" />
+</a>
+
+<!-- Scripts -->
+<script>
+  // Dark Mode Toggle with 180 degree rotate
+  const toggleBtn = document.getElementById("toggleMode");
+  let isDark = false;
+
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    isDark = !isDark;
+
+    toggleBtn.style.transform = isDark ? "rotate(180deg)" : "rotate(0deg)";
+
+    // Animate skill bars each toggle
+    animateSkills();
+  });
+
+  // Typing Effect with random colors (xanh, đỏ, tím, vàng)
+  const typingEl = document.getElementById("typing");
+  const texts = [
+    "Phạm Văn Hoà - Web Developer",
+    "Chuyên HTML/CSS, PHP, MySQL",
+    "Kinh nghiệm 3+ năm lập trình"
+  ];
+  const colors = ["#006400", "#ff0000", "#800080", "#ffcc00"];
+  let i = 0;
+
+  function typingEffect() {
+    typingEl.textContent = "";
+    const currentText = texts[i];
+    let j = 0;
+    // Random color for this typing
+    typingEl.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+    function typeChar() {
+      if (j <= currentText.length) {
+        typingEl.textContent = currentText.slice(0, j++);
+        setTimeout(typeChar, 70);
+      } else {
+        setTimeout(() => {
+          i = (i + 1) % texts.length;
+          typingEffect();
+        }, 1500);
+      }
+    }
+    typeChar();
+  }
+
+  typingEffect();
+
+  // Animate skill bars from 0 to 100%
+  function animateSkills() {
+    const skillFills = document.querySelectorAll(".skill-fill");
+    skillFills.forEach((fill) => {
+      fill.style.width = "0";
+      // Get class to determine color and percent (here fixed 100%)
+      setTimeout(() => {
+        fill.style.width = "100%";
+      }, 100);
+    });
+  }
+
+  // Animate skills on page load
+  window.onload = () => {
+    animateSkills();
+  };
+</script>
+</body>
+</html>
