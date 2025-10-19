@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Developer/designer/html/css</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="https://dangkywebvoibocongthuong.com/wp-content/uploads/2021/11/logo-da-dang-ky-bo-cong-thuong.png" sizes="32x32" />
   <style>
     body {
       margin: 0;
@@ -312,6 +311,7 @@
   </div>
 
   <script>
+    // Toggle Dark Mode
     const toggleBtn = document.getElementById("toggleMode");
     let isDark = false;
 
@@ -322,37 +322,63 @@
       animateSkills();
     });
 
+    // Phần đánh chữ hiệu ứng typing với intro text đầu tiên
     const typingEl = document.getElementById("typing");
+
+    const introText = "PHẠM VĂN HOÀ 22/12/2002"; // chữ xuất hiện đầu tiên
+
     const texts = [
       "Phạm Văn Hoà - Web Developer",
       "Chuyên HTML/CSS, PHP, MySQL",
       "Kinh nghiệm 3+ năm lập trình"
     ];
-    const colors = ["#006400", "#ff0000", "#800080", "#ffcc00"];
-    let i = 0;
 
-    function typingEffect() {
-      typingEl.textContent = "";
-      const currentText = texts[i];
-      let j = 0;
-      typingEl.style.color = colors[Math.floor(Math.random() * colors.length)];
+    let index = 0;
+    let charIndex = 0;
+    let typingDelay = 70;
+    let erasingDelay = 40;
+    let newTextDelay = 1500;
 
-      function typeChar() {
-        if (j <= currentText.length) {
-          typingEl.textContent = currentText.slice(0, j++);
-          setTimeout(typeChar, 70);
-        } else {
-          setTimeout(() => {
-            i = (i + 1) % texts.length;
-            typingEffect();
-          }, 1500);
-        }
+    // Hàm đánh chữ intro đầu tiên
+    function typeIntro() {
+      if (charIndex < introText.length) {
+        typingEl.textContent += introText.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeIntro, typingDelay);
+      } else {
+        setTimeout(() => {
+          typingEl.textContent = ""; // xóa chữ intro đi
+          charIndex = 0;
+          type();
+        }, newTextDelay);
       }
-      typeChar();
     }
 
-    typingEffect();
+    // Hàm typing chính
+    function type() {
+      if (charIndex < texts[index].length) {
+        typingEl.textContent += texts[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(type, typingDelay);
+      } else {
+        setTimeout(erase, newTextDelay);
+      }
+    }
 
+    // Hàm xoá chữ
+    function erase() {
+      if (charIndex > 0) {
+        typingEl.textContent = texts[index].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(erase, erasingDelay);
+      } else {
+        index++;
+        if (index >= texts.length) index = 0;
+        setTimeout(type, typingDelay + 1100);
+      }
+    }
+
+    // Animation thanh skill bar
     function animateSkills() {
       const skillFills = document.querySelectorAll(".skill-fill");
       skillFills.forEach((fill) => {
@@ -364,6 +390,7 @@
     }
 
     window.onload = () => {
+      typeIntro();  // Khởi chạy hiệu ứng gõ chữ intro
       animateSkills();
     };
   </script>
