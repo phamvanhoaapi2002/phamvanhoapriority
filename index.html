@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Developer/designer/html/css</title>
+  <title>Developer / Designer / HTML / CSS</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
@@ -12,9 +12,10 @@
       font-family: Arial, sans-serif;
       background: #f5f5f5;
       color: #222;
-      transition: background 0.5s, color 0.5s, filter 0.3s;
+      transition: background 0.5s, color 0.5s;
     }
 
+    /* ==== NAVBAR ==== */
     .navbar {
       width: 100%;
       background-color: #4a4a4a;
@@ -29,24 +30,56 @@
       max-width: 1100px;
       margin: auto;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       padding: 14px 20px;
       color: white;
     }
 
+    /* ==== MENU TOGGLE BUTTON ==== */
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 28px;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 5px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover span {
+      background: #ffcc00;
+      transform: scaleX(1.05);
+    }
+
+    /* Hiệu ứng đổi thành dấu ❌ khi mở */
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(10px);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-10px);
+    }
+
+    /* ==== MENU ==== */
     .nav-menu {
       list-style: none;
       display: flex;
       gap: 25px;
       margin: 0;
       padding: 0;
-    }
-
-    .nav-menu li {
-      display: flex;
-      align-items: center;
-      position: relative;
+      transition: max-height 0.3s ease, transform 0.3s ease;
     }
 
     .nav-menu li a {
@@ -60,18 +93,49 @@
       color: #ffcc00;
     }
 
-    #toggleMode {
-      cursor: pointer;
-      margin-left: 10px;
-      transition: transform 0.5s ease;
+    /* ==== MOBILE MENU ==== */
+    @media (max-width: 992px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 58px;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-end;
+        background-color: #4a4a4a;
+        width: 100%;
+        overflow: hidden;
+        max-height: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+
+      .nav-menu.active {
+        max-height: 400px;
+        transform: scaleY(1);
+      }
+
+      .nav-menu li {
+        width: 100%;
+        text-align: right;
+        padding: 12px 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .nav-menu li:last-child {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
     }
 
+    /* ==== MAIN ==== */
     .container {
       max-width: 900px;
       margin: 140px auto 20px;
       padding: 20px;
       text-align: center;
-      position: relative;
     }
 
     .main-logo {
@@ -79,8 +143,7 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      margin: 0 auto 25px;
-      display: block;
+      margin-bottom: 25px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
       border: 5px solid #4a90e2;
       background: white;
@@ -93,18 +156,14 @@
       gap: 10px;
       font-size: 32px;
       font-weight: bold;
-      flex-wrap: nowrap;
     }
 
-    .typing-container {
-      white-space: nowrap;
-    }
-
+    /* ==== TYPING EFFECT ==== */
     .typing {
       display: inline-block;
+      border-right: 2px solid #666;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 2px solid #666;
       animation: blink 0.7s infinite;
     }
 
@@ -113,6 +172,7 @@
       100% { border-color: #666; }
     }
 
+    /* ==== SOCIALS ==== */
     .socials {
       display: flex;
       justify-content: center;
@@ -130,19 +190,11 @@
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 22px;
       transition: 0.3s;
-      text-decoration: none;
     }
 
     .social-btn:hover {
       transform: translateY(-5px);
-    }
-
-    .social-btn img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
     }
 
     .skills {
@@ -151,20 +203,12 @@
       text-align: center;
     }
 
-    .skills h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
-    }
-
     .skill {
       margin: 20px 0;
-      text-align: left;
-      position: relative;
     }
 
     .skill-name {
       font-weight: bold;
-      margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
     }
@@ -180,7 +224,6 @@
     .skill-fill {
       height: 100%;
       width: 0;
-      border-radius: 10px;
       transition: width 2s ease-in-out;
     }
 
@@ -214,93 +257,59 @@
       color: #ccc;
     }
 
-    /* ✅ Fix: Dark mode cho skill bar */
     body.dark .skill-bar {
       background: #444;
-    }
-
-    /* ✅ Responsive nav menu */
-    @media only screen and (max-width: 600px) {
-      .nav-menu {
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
-        background: #4a4a4a;
-        padding: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="nav-container">
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <ul class="nav-menu">
         <li><a href="#about">About Me</a></li>
         <li><a href="#stuffs">My Stuffs</a></li>
         <li><a href="#signed">Signed App</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li style="display: flex; align-items: center;">
-          <a href="#contact">Contact</a>
-          <svg id="toggleMode" height="30" width="30" viewBox="0 0 400 400" title="Chuyển chế độ sáng/tối">
-            <circle cx="200" cy="200" fill="white" r="195" stroke="#000" stroke-width="10"></circle>
-            <path d="M 200 375 A 175 175 0 0 1 200 25"></path>
-            <path d="M 200 300 A 100 100 0 0 1 200 100" fill="#FFF"></path>
-            <path d="M 200 100 A 100 100 180 0 1 200 300"></path>
-          </svg>
-        </li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <div class="container">
     <section id="about">
-      <img src="https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-6/505114689_684056564541751_5987257838516801134_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=9QROC8ObNcAQ7kNvwEwgGzu&_nc_oc=Adn3Ty1PKglSXdDCPLz9Rbyc_2jaQICPCtRypLmcCgqlZ_f8V81fpTdZIBtFWuhW0MU&_nc_zt=23&_nc_ht=scontent.fhan4-1.fna&_nc_gid=vkciGsxt7XoEqAxCrpGBZw&oh=00_AffofwTvs2jh1vf4B_HKEMY-p0UFGs_XFPM4SuE5F5uVeA&oe=68FA3B9A" alt="Logo lớn" class="main-logo" />
+      <img src="https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-6/505114689_684056564541751_5987257838516801134_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=9QROC8ObNcAQ7kNvwEwgGzu&_nc_oc=Adn3Ty1PKglSXdDCPLz9Rbyc_2jaQICPCtRypLmcCgqlZ_f8V81fpTdZIBtFWuhW0MU&_nc_zt=23&_nc_ht=scontent.fhan4-1.fna&_nc_gid=vkciGsxt7XoEqAxCrpGBZw&oh=00_AffofwTvs2jh1vf4B_HKEMY-p0UFGs_XFPM4SuE5F5uVeA&oe=68FA3B9A"
+        alt="Logo lớn" class="main-logo" />
       <h1 class="title">
-        <span class="typing-container">
-          <span class="typing" id="typing"></span>
-        </span>
+        <span class="typing" id="typing"></span>
         <img src="https://khoindvn.io.vn/img/icons/badge.png" alt="badge" style="width: 40px; height: 40px; border-radius: 50%;" />
       </h1>
     </section>
 
     <div class="socials">
-      <a href="https://www.facebook.com/laptrinhvienPHAMVANHOApriority/?locale=vi_VN" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://static.vecteezy.com/system/resources/previews/018/930/698/non_2x/facebook-logo-facebook-icon-transparent-free-png.png" alt="Facebook" />
+      <a href="https://www.facebook.com/laptrinhvienPHAMVANHOApriority/?locale=vi_VN" class="social-btn" target="_blank">
+        <img src="https://static.vecteezy.com/system/resources/previews/018/930/698/non_2x/facebook-logo-facebook-icon-transparent-free-png.png" width="28" />
       </a>
-      <a href="https://m.me/laptrinhvienPHAMVANHOApriority" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://static.xx.fbcdn.net/rsrc.php/yb/r/M8rOX7S5AN3.svg" alt="Messenger" />
+      <a href="https://m.me/laptrinhvienPHAMVANHOApriority" class="social-btn" target="_blank">
+        <img src="https://static.xx.fbcdn.net/rsrc.php/yb/r/M8rOX7S5AN3.svg" width="28" />
       </a>
-      <a href="https://t.me/+0869719516" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/2048px-Telegram_2019_Logo.svg.png" alt="Telegram" />
-      </a>
-      <a href="https://zalo.me/0869719516" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://img.icons8.com/color/48/zalo.png" alt="Zalo" />
-      </a>
-      <a href="https://www.youtube.com/@PHAMVANHOAAPI2002" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://img.icons8.com/color/48/youtube-play.png" alt="YouTube" />
-      </a>
-      <a href="https://wa.me/0869719516" class="social-btn" target="_blank" rel="noopener noreferrer">
-        <img src="https://img.icons8.com/color/48/whatsapp.png" alt="WhatsApp" />
+      <a href="https://t.me/+0869719516" class="social-btn" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="28" />
       </a>
     </div>
 
-    <section id="stuffs">
-      <h2>My Stuffs</h2>
-      <p>Danh sách các dự án cá nhân hoặc ứng dụng nổi bật của bạn.</p>
-    </section>
-
-    <section id="signed">
-      <h2>Signed App</h2>
-      <p>Liệt kê các app đã ký hoặc xuất bản.</p>
-    </section>
-
-    <div class="skills" id="skills">
+    <section id="skills" class="skills">
       <h2>Programming Language Skills</h2>
       <div class="skill"><div class="skill-name">HTML/CSS <span>100%</span></div><div class="skill-bar"><div class="skill-fill html"></div></div></div>
       <div class="skill"><div class="skill-name">Lua <span>100%</span></div><div class="skill-bar"><div class="skill-fill lua"></div></div></div>
       <div class="skill"><div class="skill-name">PHP <span>100%</span></div><div class="skill-bar"><div class="skill-fill php"></div></div></div>
       <div class="skill"><div class="skill-name">MySQL <span>100%</span></div><div class="skill-bar"><div class="skill-fill mysql"></div></div></div>
-    </div>
+    </section>
 
     <footer id="contact">
       <div class="contact-box">
@@ -311,50 +320,30 @@
   </div>
 
   <script>
-    // Toggle Dark Mode
-    const toggleBtn = document.getElementById("toggleMode");
-    let isDark = false;
+    // Toggle menu mobile
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.querySelector(".nav-menu");
+    const navLinks = document.querySelectorAll(".nav-menu li a");
 
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      isDark = !isDark;
-      toggleBtn.style.transform = isDark ? "rotate(180deg)" : "rotate(0deg)";
-      animateSkills();
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+      menuToggle.classList.toggle("active");
     });
 
-    // Phần đánh chữ hiệu ứng typing với intro text đầu tiên
+    // Tự đóng menu khi click vào 1 mục
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        menuToggle.classList.remove("active");
+      });
+    });
+
+    // Hiệu ứng gõ chữ
     const typingEl = document.getElementById("typing");
+    const texts = ["PHẠM VĂN HOÀ", "Web Developer", "HTML / CSS / PHP / MySQL"];
+    let index = 0, charIndex = 0;
+    const typingDelay = 70, erasingDelay = 40, newTextDelay = 1200;
 
-    const introText = "PHẠM VĂN HOÀ 22/12/2002"; // chữ xuất hiện đầu tiên
-
-    const texts = [
-      "Phạm Văn Hoà - Web Developer",
-      "Chuyên HTML/CSS, PHP, MySQL",
-      "Kinh nghiệm 3+ năm lập trình"
-    ];
-
-    let index = 0;
-    let charIndex = 0;
-    let typingDelay = 70;
-    let erasingDelay = 40;
-    let newTextDelay = 1500;
-
-    // Hàm đánh chữ intro đầu tiên
-    function typeIntro() {
-      if (charIndex < introText.length) {
-        typingEl.textContent += introText.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeIntro, typingDelay);
-      } else {
-        setTimeout(() => {
-          typingEl.textContent = ""; // xóa chữ intro đi
-          charIndex = 0;
-          type();
-        }, newTextDelay);
-      }
-    }
-
-    // Hàm typing chính
     function type() {
       if (charIndex < texts[index].length) {
         typingEl.textContent += texts[index].charAt(charIndex);
@@ -365,32 +354,27 @@
       }
     }
 
-    // Hàm xoá chữ
     function erase() {
       if (charIndex > 0) {
         typingEl.textContent = texts[index].substring(0, charIndex - 1);
         charIndex--;
         setTimeout(erase, erasingDelay);
       } else {
-        index++;
-        if (index >= texts.length) index = 0;
-        setTimeout(type, typingDelay + 1100);
+        index = (index + 1) % texts.length;
+        setTimeout(type, typingDelay + 300);
       }
     }
 
-    // Animation thanh skill bar
+    // Thanh skill
     function animateSkills() {
-      const skillFills = document.querySelectorAll(".skill-fill");
-      skillFills.forEach((fill) => {
+      document.querySelectorAll(".skill-fill").forEach(fill => {
         fill.style.width = "0";
-        setTimeout(() => {
-          fill.style.width = "100%";
-        }, 100);
+        setTimeout(() => fill.style.width = "100%", 100);
       });
     }
 
     window.onload = () => {
-      typeIntro();  // Khởi chạy hiệu ứng gõ chữ intro
+      type();
       animateSkills();
     };
   </script>
